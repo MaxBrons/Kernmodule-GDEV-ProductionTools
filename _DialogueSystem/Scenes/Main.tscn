@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://by8bjtcsx20xn"]
+
+[ext_resource type="PackedScene" uid="uid://c2t376mulgesg" path="res://_DialogueSystem/Scenes/DS_UI.tscn" id="1_1dr62"]
+[ext_resource type="PackedScene" uid="uid://cjlxq1iv0n1e4" path="res://_DialogueSystem/Scenes/DS_Content.tscn" id="2_ql46o"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="DS UI" parent="." instance=ExtResource("1_1dr62")]
+layout_mode = 1
+
+[node name="DS Content" parent="DS UI" instance=ExtResource("2_ql46o")]
+layout_mode = 1
+anchors_preset = -1
