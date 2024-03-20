@@ -1,7 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://by8bjtcsx20xn"]
+[gd_scene load_steps=2 format=3 uid="uid://by8bjtcsx20xn"]
 
-[ext_resource type="PackedScene" uid="uid://c2t376mulgesg" path="res://_DialogueSystem/Scenes/DS_UI.tscn" id="1_1dr62"]
-[ext_resource type="PackedScene" uid="uid://cjlxq1iv0n1e4" path="res://_DialogueSystem/Scenes/DS_Content.tscn" id="2_ql46o"]
+[ext_resource type="PackedScene" uid="uid://dqqhqgflvsr85" path="res://_DialogueSystem/Scenes/MenuBar.tscn" id="1_b3phe"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -11,9 +10,22 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="DS UI" parent="." instance=ExtResource("1_1dr62")]
-layout_mode = 1
+[node name="MenuBar" parent="." node_paths=PackedStringArray("_graph") instance=ExtResource("1_b3phe")]
+layout_mode = 0
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
+_graph = NodePath("../GraphEdit")
 
-[node name="DS Content" parent="DS UI" instance=ExtResource("2_ql46o")]
+[node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 1
 anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+minimap_enabled = false
+show_minimap_button = false
