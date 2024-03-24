@@ -1,3 +1,4 @@
+using DialogueSystem;
 using Godot;
 
 public partial class MenuBarManager : MenuBar
@@ -6,10 +7,15 @@ public partial class MenuBarManager : MenuBar
     [Export] private NodesPopupMenu _nodesMenu;
     [Export] private FileDialog _openDialog;
     [Export] private FileDialog _saveDialog;
-    [Export] private Node _graph;
+    [Export] private FileDialog _exportDialog;
+
+    private NodeGraph _graph;
 
     public override void _Ready()
     {
+        _graph = Owner.GetChild<NodeGraph>();
+        GD.Print(_graph);
+
         _fileMenu.OnMenuItemSelected += FileMenu_OnMenuItemSelected;
         _nodesMenu.OnMenuItemSelected += NodesMenu_OnMenuItemSelected;
     }
@@ -19,10 +25,13 @@ public partial class MenuBarManager : MenuBar
     {
         switch (id) {
             case FilePopupMenu.FileNames.Open:
-                _fileMenu.OpenFile(_openDialog);
+                _fileMenu.OpenFile(_openDialog, _graph);
                 break;
             case FilePopupMenu.FileNames.Save:
-                _fileMenu.SaveFile(_saveDialog);
+                _fileMenu.SaveFile(_saveDialog, _graph);
+                break;
+            case FilePopupMenu.FileNames.Export:
+                _fileMenu.ExportFile(_exportDialog, _graph);
                 break;
             default:
                 break;

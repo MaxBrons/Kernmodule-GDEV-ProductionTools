@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://by8bjtcsx20xn"]
+[gd_scene load_steps=4 format=3 uid="uid://by8bjtcsx20xn"]
 
 [ext_resource type="PackedScene" uid="uid://dqqhqgflvsr85" path="res://_DialogueSystem/Scenes/MenuBar.tscn" id="1_b3phe"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Nodes/NodeGraph.cs" id="2_6w5jr"]
+[ext_resource type="PackedScene" uid="uid://dntcgtpcpesqj" path="res://_DialogueSystem/Scenes/Nodes/EntryNode.tscn" id="3_xdork"]
 
 [node name="Main" type="Control"]
 layout_mode = 3
@@ -10,14 +12,13 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuBar" parent="." node_paths=PackedStringArray("_graph") instance=ExtResource("1_b3phe")]
+[node name="MenuBar" parent="." instance=ExtResource("1_b3phe")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
 anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
-_graph = NodePath("../GraphEdit")
 
 [node name="GraphEdit" type="GraphEdit" parent="."]
 layout_mode = 1
@@ -27,5 +28,16 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+right_disconnects = true
 minimap_enabled = false
 show_minimap_button = false
+script = ExtResource("2_6w5jr")
+
+[node name="EntryNode" parent="GraphEdit" instance=ExtResource("3_xdork")]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 118.6
+offset_right = 198.0
+offset_bottom = 196.6
+mouse_filter = 1
+position_offset = Vector2(98, 118.6)

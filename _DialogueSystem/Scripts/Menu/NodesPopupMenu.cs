@@ -1,7 +1,7 @@
 using Godot;
 using System;
 
-public partial class NodesPopupMenu : PopupMenu
+public partial class NodesPopupMenu : PopupMenuItem
 {
     public enum NodeNames
     {
@@ -18,7 +18,7 @@ public partial class NodesPopupMenu : PopupMenu
 
         IdPressed += FilePopupMenu_IdPressed;
 
-        AddItem("Add Text Node", 0, (Key)KeyModifierMask.MaskCmdOrCtrl | Key.Key1);
+        base._Ready();
     }
 
     protected override void Dispose(bool disposing)
@@ -43,5 +43,13 @@ public partial class NodesPopupMenu : PopupMenu
     {
         if (id == 0)
             OnMenuItemSelected?.Invoke(NodeNames.TextNode);
+    }
+
+    protected override PopupItem[] GetMenuItems()
+    {
+        return new[]
+        {
+           new PopupItem("Add Text Node", 0, (Key)KeyModifierMask.MaskAlt | Key.Key1)
+        };
     }
 }

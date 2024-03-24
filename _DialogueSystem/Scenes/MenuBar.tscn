@@ -4,9 +4,9 @@
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/Menu/MenuBarManager.cs" id="2_bxita"]
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/Menu/FilePopupMenu.cs" id="3_lk1w3"]
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/Menu/NodesPopupMenu.cs" id="4_qpyvm"]
-[ext_resource type="PackedScene" uid="uid://dntcgtpcpesqj" path="res://_DialogueSystem/Scenes/Nodes/TextNode.tscn" id="5_yimob"]
+[ext_resource type="PackedScene" uid="uid://by4rg3iggc5nf" path="res://_DialogueSystem/Scenes/Nodes/TextNode.tscn" id="5_yimob"]
 
-[node name="MenuBar" type="MenuBar" node_paths=PackedStringArray("_fileMenu", "_nodesMenu", "_openDialog", "_saveDialog")]
+[node name="MenuBar" type="MenuBar" node_paths=PackedStringArray("_fileMenu", "_nodesMenu", "_openDialog", "_saveDialog", "_exportDialog")]
 anchors_preset = -1
 anchor_right = 1.0
 anchor_bottom = 0.05
@@ -18,6 +18,7 @@ _fileMenu = NodePath("File")
 _nodesMenu = NodePath("Nodes")
 _openDialog = NodePath("FileOpenDialog")
 _saveDialog = NodePath("FileSaveDialog")
+_exportDialog = NodePath("ExportDialog")
 
 [node name="File" type="PopupMenu" parent="."]
 theme = ExtResource("1_tupym")
@@ -39,12 +40,19 @@ size = Vector2i(312, 154)
 ok_button_text = "Open"
 file_mode = 0
 access = 2
-filters = PackedStringArray("\"*.dsf ; Dialogue System File\"")
+filters = PackedStringArray("*.dsf ; Dialogue System File")
 use_native_dialog = true
 
 [node name="FileSaveDialog" type="FileDialog" parent="."]
 size = Vector2i(312, 154)
 ok_button_text = "Save"
 access = 2
-filters = PackedStringArray("\"*.dsf ; Dialogue System File\"")
+filters = PackedStringArray("*.dsf ; Dialogue System File")
+use_native_dialog = true
+
+[node name="ExportDialog" type="FileDialog" parent="."]
+size = Vector2i(312, 154)
+ok_button_text = "Save"
+access = 2
+filters = PackedStringArray("*.json ; JSON File")
 use_native_dialog = true
