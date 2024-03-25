@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://dxs8inxaliojg" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/NodeButtonInfo.tres" id="4_c2xtw"]
 [ext_resource type="PackedScene" uid="uid://b7e6aj28fwiik" path="res://_DialogueSystem/Scripts/2.0/Graph.tscn" id="6_ql3sy"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("_menuBar")]
+[node name="Main" type="Control" node_paths=PackedStringArray("_menuBar", "_graph")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -17,11 +17,16 @@ grow_vertical = 2
 theme = ExtResource("1_v8043")
 script = ExtResource("1_4l1d8")
 _menuBar = NodePath("MenuBar")
-_buttons = Array[Resource]([ExtResource("2_yy585"), ExtResource("4_c2xtw")])
+_graph = NodePath("Graph")
+_buttonInfo = Array[Resource]([ExtResource("2_yy585"), ExtResource("4_c2xtw")])
 
 [node name="MenuBar" parent="." instance=ExtResource("3_rc7t2")]
 layout_mode = 0
 anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+grow_horizontal = 1
+grow_vertical = 1
 
-[node name="GraphEdit" parent="." instance=ExtResource("6_ql3sy")]
+[node name="Graph" parent="." instance=ExtResource("6_ql3sy")]
 layout_mode = 1
