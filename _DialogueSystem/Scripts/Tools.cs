@@ -44,6 +44,7 @@ namespace DialogueSystem
             {
                 _value = value;
             }
+
             public static implicit operator Serializable<T>(T value)
             {
                 return new Serializable<T>(GD.VarToStr(Variant.From(value)));
@@ -78,12 +79,25 @@ namespace DialogueSystem
 
         public static void RemoveChildren(this Node node, bool emediate = false)
         {
-            foreach (var item in node.GetChildren()) {
+            RemoveChildren<Node>(node);
+        }
+
+        public static void RemoveChildren<T>(this Node node, bool emediate = false) where T : Node
+        {
+            foreach (var item in node.GetChildren<T>()) {
                 if (emediate)
                     item.Free();
                 else
                     item.QueueFree();
             }
+        }
+
+        public static T Instantiate<T>(string scenePath) where T : Node
+        {
+            if (scenePath == string.Empty)
+                return null;
+
+            return GD.Load<PackedScene>(scenePath).Instantiate<T>();
         }
     }
 }

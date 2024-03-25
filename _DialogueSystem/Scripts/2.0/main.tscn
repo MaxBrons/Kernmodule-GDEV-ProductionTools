@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://metpk5545cil"]
+
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/GameManager.cs" id="1_4l1d8"]
+[ext_resource type="Theme" uid="uid://ce65v4oomxj0w" path="res://_DialogueSystem/Themes/Menu/MenuBarTheme.tres" id="1_v8043"]
+[ext_resource type="Resource" uid="uid://dguwbrqfvwl4m" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/FileButtonInfo.tres" id="2_yy585"]
+[ext_resource type="PackedScene" uid="uid://brk6pxk0ino2r" path="res://_DialogueSystem/Scripts/2.0/Menu/MenuBar2.tscn" id="3_rc7t2"]
+
+[node name="Main" type="Control" node_paths=PackedStringArray("_menuBar")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("1_v8043")
+script = ExtResource("1_4l1d8")
+_menuBar = NodePath("MenuBar")
+_buttons = Array[Resource]([ExtResource("2_yy585")])
+
+[node name="MenuBar" parent="." instance=ExtResource("3_rc7t2")]
+layout_mode = 0
+anchors_preset = 0

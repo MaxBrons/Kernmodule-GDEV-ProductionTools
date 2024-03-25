@@ -1,0 +1,8 @@
+[gd_resource type="Resource" load_steps=2 format=3 uid="uid://dguwbrqfvwl4m"]
+
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/FileButton.cs" id="1_yh6bl"]
+
+[resource]
+script = ExtResource("1_yh6bl")
+_title = "File"
+_menuButtonPrefab = ""
