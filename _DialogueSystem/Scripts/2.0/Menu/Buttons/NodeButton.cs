@@ -16,7 +16,7 @@ namespace DialogueSystem.Menu
                     MenuButtonItems = new()
                     {
                          new() {
-                            MenuButtonItem = new(){ Name = "Text Node", ID = 0, Shortcut = (Key)KeyModifierMask.MaskAlt | Key.Key1 },
+                            MenuButtonItem = new(){ Name = "Add Text Node", ID = 0, Shortcut = (Key)KeyModifierMask.MaskAlt | Key.Key1 },
                             SubMenuButtons = null
                         },
                     }

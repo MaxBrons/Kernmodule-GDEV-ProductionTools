@@ -1,4 +1,5 @@
 ﻿using Godot;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
@@ -25,8 +26,11 @@ namespace DialogueSystem.Menu
 
     public partial class MenuBar : Godot.MenuBar
     {
+        public event Action<MenuButton.MenuButtonItem> OnMenuItemPressed;
+
         private List<IMenuListener> _listeners = new();
         private Dictionary<PopupMenu, MenuButtonInitInfo> _buttons = new();
+        private PopupMenu _currentMenu;
 
         public override void _Ready()
         {
@@ -53,7 +57,7 @@ namespace DialogueSystem.Menu
             }
 
             button.IdPressed += OnIDPressed;
-            button.IdFocused += OnIDPressed;
+            button.VisibilityChanged += () => { Button_VisibilityChanged(button); };
 
             AddChild(button);
 
@@ -77,13 +81,19 @@ namespace DialogueSystem.Menu
             button.QueueFree();
         }
 
-        public void AddListener(IMenuListener listener) => _listeners.Add(listener);
-        public void RemoveListener(in IMenuListener listener) => _listeners.Remove(listener);
-
         private void OnIDPressed(long id)
         {
-            //_listeners.ForEach(x => x.OnButtonPressed()
-            GD.Print(id);
+            foreach (var listener in _listeners) {
+                var menuItems = _buttons[_currentMenu];
+                var pressedItemInfo = menuItems.MenuButton.MenuButtonItems.First(x => x.MenuButtonItem.ID == id);
+
+                OnMenuItemPressed?.Invoke(pressedItemInfo.MenuButtonItem);
+            }
+        }
+
+        private void Button_VisibilityChanged(PopupMenu menu)
+        {
+            _currentMenu = menu;
         }
     }
 }

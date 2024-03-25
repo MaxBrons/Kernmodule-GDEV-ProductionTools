@@ -1,0 +1,25 @@
+[gd_scene load_steps=3 format=3 uid="uid://b7e6aj28fwiik"]
+
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Nodes/NodeGraph.cs" id="1_q3w0e"]
+[ext_resource type="PackedScene" uid="uid://dntcgtpcpesqj" path="res://_DialogueSystem/Scenes/Nodes/EntryNode.tscn" id="2_av5go"]
+
+[node name="GraphEdit" type="GraphEdit"]
+anchors_preset = -1
+anchor_top = 0.05
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+right_disconnects = true
+minimap_enabled = false
+show_minimap_button = false
+script = ExtResource("1_q3w0e")
+
+[node name="EntryNode" parent="." instance=ExtResource("2_av5go")]
+layout_mode = 0
+offset_left = 98.0
+offset_top = 118.6
+offset_right = 198.0
+offset_bottom = 196.6
+mouse_filter = 1
+position_offset = Vector2(98, 118.6)

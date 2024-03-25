@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://metpk5545cil"]
+[gd_scene load_steps=7 format=3 uid="uid://metpk5545cil"]
 
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/GameManager.cs" id="1_4l1d8"]
 [ext_resource type="Theme" uid="uid://ce65v4oomxj0w" path="res://_DialogueSystem/Themes/Menu/MenuBarTheme.tres" id="1_v8043"]
 [ext_resource type="Resource" uid="uid://dguwbrqfvwl4m" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/FileButtonInfo.tres" id="2_yy585"]
 [ext_resource type="PackedScene" uid="uid://brk6pxk0ino2r" path="res://_DialogueSystem/Scripts/2.0/Menu/MenuBar2.tscn" id="3_rc7t2"]
+[ext_resource type="Resource" uid="uid://dxs8inxaliojg" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/NodeButtonInfo.tres" id="4_c2xtw"]
+[ext_resource type="PackedScene" uid="uid://b7e6aj28fwiik" path="res://_DialogueSystem/Scripts/2.0/Graph.tscn" id="6_ql3sy"]
 
 [node name="Main" type="Control" node_paths=PackedStringArray("_menuBar")]
 layout_mode = 3
@@ -15,8 +17,11 @@ grow_vertical = 2
 theme = ExtResource("1_v8043")
 script = ExtResource("1_4l1d8")
 _menuBar = NodePath("MenuBar")
-_buttons = Array[Resource]([ExtResource("2_yy585")])
+_buttons = Array[Resource]([ExtResource("2_yy585"), ExtResource("4_c2xtw")])
 
 [node name="MenuBar" parent="." instance=ExtResource("3_rc7t2")]
 layout_mode = 0
 anchors_preset = 0
+
+[node name="GraphEdit" parent="." instance=ExtResource("6_ql3sy")]
+layout_mode = 1
