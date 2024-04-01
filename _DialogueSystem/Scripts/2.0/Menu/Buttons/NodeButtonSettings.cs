@@ -2,7 +2,7 @@ using Godot;
 
 namespace DialogueSystem.Menu
 {
-    public partial class NodeButton : ScriptableObject, IMenuButton
+    public partial class NodeButtonSettings : ScriptableObject, IMenuButton
     {
         [Export] private string _title;
         [Export] private string _menuButtonPrefab;

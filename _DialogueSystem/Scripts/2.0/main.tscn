@@ -1,13 +1,26 @@
-[gd_scene load_steps=7 format=3 uid="uid://metpk5545cil"]
+[gd_scene load_steps=11 format=3 uid="uid://metpk5545cil"]
 
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/GameManager.cs" id="1_4l1d8"]
 [ext_resource type="Theme" uid="uid://ce65v4oomxj0w" path="res://_DialogueSystem/Themes/Menu/MenuBarTheme.tres" id="1_v8043"]
-[ext_resource type="Resource" uid="uid://dguwbrqfvwl4m" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/FileButtonInfo.tres" id="2_yy585"]
+[ext_resource type="Resource" uid="uid://bkj57m012qnac" path="res://_DialogueSystem/Scripts/2.0/Settings/FileButtonSettings.tres" id="2_yy585"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Graph/GraphNodeSettings.cs" id="3_kdcag"]
 [ext_resource type="PackedScene" uid="uid://brk6pxk0ino2r" path="res://_DialogueSystem/Scripts/2.0/Menu/MenuBar2.tscn" id="3_rc7t2"]
-[ext_resource type="Resource" uid="uid://dxs8inxaliojg" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/NodeButtonInfo.tres" id="4_c2xtw"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Graph/GraphSettings.cs" id="4_6l54d"]
+[ext_resource type="Resource" uid="uid://c62qeu8u7ofwq" path="res://_DialogueSystem/Scripts/2.0/Settings/NodeButtonSettings.tres" id="4_c2xtw"]
 [ext_resource type="PackedScene" uid="uid://b7e6aj28fwiik" path="res://_DialogueSystem/Scripts/2.0/Graph.tscn" id="6_ql3sy"]
 
-[node name="Main" type="Control" node_paths=PackedStringArray("_menuBar", "_graph")]
+[sub_resource type="Resource" id="Resource_b564b"]
+script = ExtResource("3_kdcag")
+NodeName = "Text Node"
+NodePrefabPath = "res://_DialogueSystem/Scripts/2.0/Graph/Nodes/TextNode.tscn"
+
+[sub_resource type="Resource" id="Resource_0w5c4"]
+script = ExtResource("4_6l54d")
+_startNodePrefab = "res://_DialogueSystem/Scripts/2.0/Graph/Nodes/StartNode.tscn"
+_startNodeOffset = Vector2(300, 300)
+_nodeTypes = Array[Object]([SubResource("Resource_b564b")])
+
+[node name="Main" type="Control" node_paths=PackedStringArray("_menuBar", "_graph", "_dialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -18,6 +31,8 @@ theme = ExtResource("1_v8043")
 script = ExtResource("1_4l1d8")
 _menuBar = NodePath("MenuBar")
 _graph = NodePath("Graph")
+_dialog = NodePath("Graph/FileDialog")
+_graphSettings = SubResource("Resource_0w5c4")
 _buttonInfo = Array[Resource]([ExtResource("2_yy585"), ExtResource("4_c2xtw")])
 
 [node name="MenuBar" parent="." instance=ExtResource("3_rc7t2")]
@@ -30,3 +45,5 @@ grow_vertical = 1
 
 [node name="Graph" parent="." instance=ExtResource("6_ql3sy")]
 layout_mode = 1
+
+[node name="FileDialog" type="FileDialog" parent="Graph"]
