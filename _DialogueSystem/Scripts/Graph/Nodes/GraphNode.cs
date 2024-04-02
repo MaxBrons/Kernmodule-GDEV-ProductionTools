@@ -9,7 +9,6 @@ namespace DialogueSystem.Graph
 
     public interface IGraphNodeData
     {
-
     }
 
     public interface IGraphNode

@@ -13,7 +13,15 @@ namespace DialogueSystem.Graph
         public Serializable<Vector2> Size { get; set; } = Vector2.Zero;
     }
 
-    public partial class TextNode : GraphNode, IGraphNode, ISavable<TextNodeData>
+    public class TextNodeExportData : IGraphNodeData
+    {
+        public ulong ID { get; set; }
+        public string Title { get; set; }
+        public string Content { get; set; }
+        public GraphConnectionsData Connections { get; set; }
+    }
+
+    public partial class TextNode : GraphNode, IGraphNode, ISavable<TextNodeData>, ISavable<TextNodeExportData>
     {
         private LineEdit _titleText;
         private TextEdit _contentText;
@@ -40,7 +48,7 @@ namespace DialogueSystem.Graph
                 SetSlot((int)slotData.Index, slotData.LSlotEnabled, (int)slotData.LType, slotData.LSlotColor, slotData.RSlotEnabled, (int)slotData.RType, slotData.RSlotColor);
         }
 
-        public TextNodeData GetData()
+        TextNodeData ISavable<TextNodeData>.GetData()
         {
             return new()
             {
@@ -50,6 +58,17 @@ namespace DialogueSystem.Graph
                 Content = _contentText?.Text,
                 Position = PositionOffset,
                 Size = Size
+            };
+        }
+
+        TextNodeExportData ISavable<TextNodeExportData>.GetData()
+        {
+            return new()
+            {
+                ID = GetInstanceId(),
+                Title = _titleText.Text,
+                Content = _contentText.Text,
+                Connections = GetParent<Graph>().GetConnectionsFromNode(Name)
             };
         }
     }

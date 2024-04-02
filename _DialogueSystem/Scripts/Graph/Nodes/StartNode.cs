@@ -13,7 +13,14 @@ namespace DialogueSystem.Graph
         public Serializable<Vector2> Size { get; set; } = new Vector2();
     }
 
-    public partial class StartNode : GraphNode, IGraphNode, ISavable<StartNodeData>
+    public class StartNodeExportData
+    {
+        public ulong ID { get; set; }
+        public string Title { get; set; }
+        public GraphConnectionsData Connections { get; set; }
+    }
+
+    public partial class StartNode : GraphNode, IGraphNode, ISavable<StartNodeData>, ISavable<StartNodeExportData>
     {
         private Label _titleText;
 
@@ -37,7 +44,7 @@ namespace DialogueSystem.Graph
                 SetSlot((int)slotData.Index, slotData.LSlotEnabled, (int)slotData.LType, slotData.LSlotColor, slotData.RSlotEnabled, (int)slotData.RType, slotData.RSlotColor);
         }
 
-        public StartNodeData GetData()
+        StartNodeData ISavable<StartNodeData>.GetData()
         {
             return new()
             {
@@ -46,6 +53,16 @@ namespace DialogueSystem.Graph
                 PrefabPath = SceneFilePath,
                 Position = PositionOffset,
                 Size = Size
+            };
+        }
+
+        StartNodeExportData ISavable<StartNodeExportData>.GetData()
+        {
+            return new()
+            {
+                ID = GetInstanceId(),
+                Title = _titleText.Text,
+                Connections = GetParent<Graph>().GetConnectionsFromNode(Name)
             };
         }
     }
