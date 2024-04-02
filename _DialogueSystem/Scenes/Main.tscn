@@ -1,18 +1,29 @@
-[gd_scene load_steps=4 format=3 uid="uid://by8bjtcsx20xn"]
+[gd_scene load_steps=8 format=3 uid="uid://metpk5545cil"]
 
-[ext_resource type="PackedScene" uid="uid://dqqhqgflvsr85" path="res://_DialogueSystem/Scenes/MenuBar.tscn" id="1_b3phe"]
-[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Nodes/NodeGraph.cs" id="2_6w5jr"]
-[ext_resource type="PackedScene" uid="uid://dntcgtpcpesqj" path="res://_DialogueSystem/Scenes/Nodes/EntryNode.tscn" id="3_xdork"]
+[ext_resource type="Theme" uid="uid://ce65v4oomxj0w" path="res://_DialogueSystem/Themes/Menu/MenuBarTheme.tres" id="1_h2ted"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/GameManager.cs" id="2_yni16"]
+[ext_resource type="Resource" uid="uid://bvns6ub1734fg" path="res://_DialogueSystem/Settings/GraphSettings.tres" id="3_jupo7"]
+[ext_resource type="Resource" uid="uid://bkj57m012qnac" path="res://_DialogueSystem/Settings/FileButtonSettings.tres" id="5_ru843"]
+[ext_resource type="Resource" uid="uid://c62qeu8u7ofwq" path="res://_DialogueSystem/Settings/NodeButtonSettings.tres" id="6_1avi0"]
+[ext_resource type="PackedScene" uid="uid://brk6pxk0ino2r" path="res://_DialogueSystem/Scenes/MenuBar.tscn" id="7_lhdtu"]
+[ext_resource type="PackedScene" uid="uid://b7e6aj28fwiik" path="res://_DialogueSystem/Scenes/Graph.tscn" id="8_ndtqj"]
 
-[node name="Main" type="Control"]
+[node name="Main" type="Control" node_paths=PackedStringArray("_menuBar", "_graph", "_dialog")]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+theme = ExtResource("1_h2ted")
+script = ExtResource("2_yni16")
+_menuBar = NodePath("MenuBar")
+_graph = NodePath("Graph")
+_dialog = NodePath("Graph/FileDialog")
+_graphSettings = ExtResource("3_jupo7")
+_buttonInfo = Array[Resource]([ExtResource("5_ru843"), ExtResource("6_1avi0")])
 
-[node name="MenuBar" parent="." instance=ExtResource("1_b3phe")]
+[node name="MenuBar" parent="." instance=ExtResource("7_lhdtu")]
 layout_mode = 0
 anchors_preset = 0
 anchor_right = 0.0
@@ -20,24 +31,7 @@ anchor_bottom = 0.0
 grow_horizontal = 1
 grow_vertical = 1
 
-[node name="GraphEdit" type="GraphEdit" parent="."]
+[node name="Graph" parent="." instance=ExtResource("8_ndtqj")]
 layout_mode = 1
-anchors_preset = -1
-anchor_top = 0.05
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-right_disconnects = true
-minimap_enabled = false
-show_minimap_button = false
-script = ExtResource("2_6w5jr")
 
-[node name="EntryNode" parent="GraphEdit" instance=ExtResource("3_xdork")]
-layout_mode = 0
-offset_left = 98.0
-offset_top = 118.6
-offset_right = 198.0
-offset_bottom = 196.6
-mouse_filter = 1
-position_offset = Vector2(98, 118.6)
+[node name="FileDialog" type="FileDialog" parent="Graph"]

@@ -1,6 +1,6 @@
 [gd_resource type="Resource" load_steps=2 format=3 uid="uid://c62qeu8u7ofwq"]
 
-[ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Menu/Buttons/NodeButtonSettings.cs" id="1_a0q4c"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Menu/Buttons/NodeButtonSettings.cs" id="1_a0q4c"]
 
 [resource]
 script = ExtResource("1_a0q4c")

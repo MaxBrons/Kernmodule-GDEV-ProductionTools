@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b7e6aj28fwiik"]
 
-[ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Graph/Graph.cs" id="1_j33nv"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Graph/Graph.cs" id="1_j33nv"]
 
 [node name="GraphEdit" type="GraphEdit"]
 anchors_preset = -1

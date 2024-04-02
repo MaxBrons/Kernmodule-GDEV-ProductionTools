@@ -1,6 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://by4rg3iggc5nf"]
+[gd_scene load_steps=2 format=3 uid="uid://ds2cn4ababbsd"]
 
-[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Nodes/TextNode.cs" id="1_cuj3r"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Graph/Nodes/TextNode.cs" id="1_d0kk3"]
 
 [node name="Text Node" type="GraphNode"]
 custom_minimum_size = Vector2(200, 100)
@@ -24,7 +24,7 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
-script = ExtResource("1_cuj3r")
+script = ExtResource("1_d0kk3")
 
 [node name="Label" type="LineEdit" parent="."]
 clip_contents = true
@@ -37,4 +37,5 @@ max_length = 32
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
+placeholder_text = "Conent"
 wrap_mode = 1

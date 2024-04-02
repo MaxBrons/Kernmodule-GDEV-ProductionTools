@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://f3gbs0xehfrd"]
 
-[ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Graph/Nodes/StartNode.cs" id="1_leo8o"]
+[ext_resource type="Script" path="res://_DialogueSystem/Scripts/Graph/Nodes/StartNode.cs" id="1_leo8o"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_pj36q"]
 content_margin_left = 5.0

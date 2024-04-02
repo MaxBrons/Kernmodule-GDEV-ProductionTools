@@ -53,8 +53,13 @@ namespace DialogueSystem
 
             // Add start node.
             var startNode = _graph.AddNode<StartNode>(_graphSettings.StartNodePrefab);
-            startNode.PositionOffset = _graphSettings.StartNodeOffset;
-            startNode.SetupNode(default, new()
+
+            startNode.SetupNode(new StartNodeData()
+            {
+                Title = "Start",
+                PrefabPath = _graphSettings.StartNodePrefab,
+                Position = _graphSettings.StartNodeOffset,
+            }, new()
             {
                 RSlotEnabled = true,
             });
