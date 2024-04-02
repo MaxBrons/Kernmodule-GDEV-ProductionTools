@@ -2,7 +2,7 @@
 
 namespace DialogueSystem.Graph
 {
-    public interface ISavable<T> where T : new()
+    public interface ISavable<T>
     {
         public T GetData();
     }

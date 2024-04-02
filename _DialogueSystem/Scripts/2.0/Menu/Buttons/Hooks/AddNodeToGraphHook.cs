@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using DialogueSystem.Graph;
+using Godot;
 
 namespace DialogueSystem.Menu.Hooks
 {
@@ -18,7 +19,7 @@ namespace DialogueSystem.Menu.Hooks
         public void AddNodeToGraph(MenuButtonInfo.MenuButtonItem button)
         {
             if (button.Name == _buttonLabelToHookOn) {
-                var node = _graph.AddNode(_pathToPrefab);
+                var node = _graph.AddNode<GraphNode>(_pathToPrefab);
 
                 OnGraphNodeAdded(node);
             }
@@ -42,7 +43,11 @@ namespace DialogueSystem.Menu.Hooks
 
         protected override void OnGraphNodeAdded(GraphNode node)
         {
-            (node as Graph.TextNode)?.SetupNode(default, new()
+            (node as Graph.TextNode)?.SetupNode(new TextNodeData()
+            {
+                ID = node.GetInstanceId(),
+            },
+            new()
             {
                 LSlotEnabled = true,
                 RSlotEnabled = true

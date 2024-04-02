@@ -45,7 +45,7 @@ namespace DialogueSystem
         public List<NodeGraphItem> GetGraphForSaving()
         {
             var startNode = this.GetChild<EntryNode>();
-            var children = this.GetChildren<TextNode>();
+            var children = this.GetChildren<TextNodeOld>();
             List<NodeGraphItem> items = new();
             List<NodeGraphConnection> connections = new();
 
@@ -90,7 +90,7 @@ namespace DialogueSystem
 
         public List<NodeGraphJSONItem> GetGraphForSavingJSON()
         {
-            var children = this.GetChildren<TextNode>();
+            var children = this.GetChildren<TextNodeOld>();
             List<NodeGraphJSONItem> items = new();
             List<NodeGraphConnection> connections = new();
 
@@ -110,7 +110,7 @@ namespace DialogueSystem
                 saveItem.Text = item.GetChild<TextEdit>()?.Text;
 
                 string toNode = connections.FirstOrDefault(x => x.FromNode == item.Name).ToNode;
-                saveItem.Connection = this.GetChildren<TextNode>().FirstOrDefault(child => toNode == child.Name)?.NodeTitle;
+                saveItem.Connection = this.GetChildren<TextNodeOld>().FirstOrDefault(child => toNode == child.Name)?.NodeTitle;
 
                 items.Add(saveItem);
             }

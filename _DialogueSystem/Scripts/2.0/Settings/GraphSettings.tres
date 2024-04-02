@@ -1,4 +1,4 @@
-[gd_resource type="Resource" load_steps=4 format=3 uid="uid://bvns6ub1734fg"]
+[gd_resource type="Resource" script_class="GraphSettings" load_steps=4 format=3 uid="uid://bvns6ub1734fg"]
 
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Graph/GraphSettings.cs" id="1_pts7v"]
 [ext_resource type="Script" path="res://_DialogueSystem/Scripts/2.0/Graph/GraphNodeSettings.cs" id="1_w1t6g"]
@@ -11,4 +11,5 @@ NodePrefabPath = "res://_DialogueSystem/Scripts/2.0/Graph/Nodes/TextNode.tscn"
 [resource]
 script = ExtResource("1_pts7v")
 _startNodePrefab = "res://_DialogueSystem/Scripts/2.0/Graph/Nodes/StartNode.tscn"
+_startNodeOffset = Vector2(300, 300)
 _nodeTypes = Array[Object]([SubResource("Resource_w8nr7")])

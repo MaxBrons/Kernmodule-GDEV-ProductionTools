@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace DialogueSystem
 {
@@ -62,11 +63,21 @@ namespace DialogueSystem
     {
         public static T GetChild<T>(this Node node) where T : Node
         {
-            return node.GetChildren().FirstOrDefault(child => {
-                System.Type type = child.GetType();
+            Node assignable = node.GetChildren().Find(child => {
+                return child.GetType().IsAssignableFrom(typeof(T));
+            });
 
-                return type.IsSubclassOf(typeof(T)) || type == typeof(T);
-            }) as T;
+            if (assignable == null)
+                GD.PrintErr("Could not find any child of type " + typeof(T) + " under node with name: " + node.Name);
+
+            return assignable as T;
+        }
+
+        public static T GetChild<T>(this Node node, string name) where T : Node
+        {
+            var children = node.GetChildren<T>();
+
+            return children.Find(x => x.Name == name);
         }
 
         public static IEnumerable<T> GetChildren<T>(this Node node) where T : Node
@@ -104,6 +115,16 @@ namespace DialogueSystem
         public static T Find<T>(this IEnumerable<T> collection, Func<T, bool> predicate)
         {
             return collection.FirstOrDefault(predicate);
+        }
+
+        public static async Task WaitWhile(Func<bool> predicate)
+        {
+            await Task.Run(() => {
+                while (!predicate())
+                    continue;
+            });
+
+            await Task.Delay(1000);
         }
     }
 }

@@ -37,4 +37,5 @@ max_length = 32
 custom_minimum_size = Vector2(0, 50)
 layout_mode = 2
 size_flags_vertical = 3
+placeholder_text = "Conent"
 wrap_mode = 1

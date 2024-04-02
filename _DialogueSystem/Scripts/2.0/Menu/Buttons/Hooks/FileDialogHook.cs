@@ -5,39 +5,32 @@ namespace DialogueSystem.Menu.Hooks
 {
     public struct DialogInfo
     {
-        public string Title;
-        public FileDialog.FileModeEnum DialogMode;
-        public FileDialog.AccessEnum Access = FileDialog.AccessEnum.Filesystem;
-        public string[] FileFilters;
-        public string CancelButtonText = "Cancel";
-        public string ComfirmButtonText;
-        public string RootFolder;
-        public bool ShowHiddenFiles;
-        public bool UseNativeDialog = true;
+        public string Title { get; set; } = string.Empty;
+        public FileDialog.FileModeEnum DialogMode { get; set; } = FileDialog.FileModeEnum.SaveFile;
+        public FileDialog.AccessEnum Access { get; set; } = FileDialog.AccessEnum.Filesystem;
+        public string[] FileFilters { get; set; } = new[] { "*.dsf ; Dialogue System File" };
+        public string CancelButtonText { get; set; } = "Cancel";
+        public string ComfirmButtonText { get; set; } = "Save";
+        public string RootFolder { get; set; } = string.Empty;
+        public bool ShowHiddenFiles { get; set; } = false;
+        public bool UseNativeDialog { get; set; } = true;
 
-        public DialogInfo(string title, FileDialog.FileModeEnum dialogMode, FileDialog.AccessEnum access, string[] fileFilter, string cancelButtonText, string comfirmButtonText, string rootFolder, bool showHiddenFiles, bool useNativeDialog)
+        public DialogInfo()
         {
-            Title = title;
-            DialogMode = dialogMode;
-            Access = access;
-            FileFilters = fileFilter;
-            CancelButtonText = cancelButtonText;
-            ComfirmButtonText = comfirmButtonText;
-            RootFolder = rootFolder;
-            ShowHiddenFiles = showHiddenFiles;
-            UseNativeDialog = useNativeDialog;
         }
     }
+
+    public delegate void DialogueConfirmedEvent(string path);
 
     public class FileDialogHook
     {
         private FileDialog _dialog;
         private string _buttonLabelToHookOn;
         private DialogInfo _dialogInfo;
-        private Action _onDialogConfirm;
+        private DialogueConfirmedEvent _onDialogConfirm;
         private Action _onDialogCancel;
 
-        public FileDialogHook(string buttonLabelToHookOn, FileDialog dialog, DialogInfo dialogInfo, Action onDialogConfirm, Action onDialogCancel)
+        public FileDialogHook(string buttonLabelToHookOn, FileDialog dialog, DialogInfo dialogInfo, DialogueConfirmedEvent onDialogConfirm, Action onDialogCancel)
         {
             _dialog = dialog;
             _dialogInfo = dialogInfo;
@@ -48,26 +41,50 @@ namespace DialogueSystem.Menu.Hooks
 
         public void OpenDialog(MenuButtonInfo.MenuButtonItem button)
         {
-            if (button.Name == _buttonLabelToHookOn) {
-                _dialog.Title = _dialogInfo.Title;
-                _dialog.FileMode = _dialogInfo.DialogMode;
-                _dialog.Access = _dialogInfo.Access;
-                _dialog.Filters = _dialogInfo.FileFilters;
-                _dialog.CancelButtonText = _dialogInfo.Title;
-                _dialog.OkButtonText = _dialogInfo.Title;
-                _dialog.RootSubfolder = _dialogInfo.RootFolder;
-                _dialog.ShowHiddenFiles = _dialogInfo.ShowHiddenFiles;
-                _dialog.UseNativeDialog = _dialogInfo.UseNativeDialog;
+            if (button.Name != _buttonLabelToHookOn)
+                return;
 
-                _dialog.Confirmed += _onDialogConfirm;
+            _dialog.Dispose();
+            _dialog = new()
+            {
+                Title = _dialogInfo.Title,
+                FileMode = _dialogInfo.DialogMode,
+                Access = _dialogInfo.Access,
+                Filters = _dialogInfo.FileFilters,
+                CancelButtonText = _dialogInfo.Title,
+                OkButtonText = _dialogInfo.Title,
+                RootSubfolder = _dialogInfo.RootFolder,
+                ShowHiddenFiles = _dialogInfo.ShowHiddenFiles,
+                UseNativeDialog = _dialogInfo.UseNativeDialog
+            };
+
+            if (_onDialogConfirm != null)
+                _dialog.FileSelected += OnFileSelected;
+
+            if (_onDialogCancel != null)
                 _dialog.Canceled += _onDialogCancel;
-            }
+
+            _dialog.Canceled += UnsubscribeEvents;
+
+            _dialog.Show();
         }
 
         public void UnsubscribeEvents()
         {
-            _dialog.Confirmed -= _onDialogConfirm;
-            _dialog.Canceled -= _onDialogCancel;
+            if (_onDialogConfirm != null)
+                _dialog.FileSelected -= OnFileSelected;
+
+            if (_onDialogCancel != null)
+                _dialog.Canceled -= _onDialogCancel;
+
+            _dialog.Canceled -= UnsubscribeEvents;
+        }
+
+        private void OnFileSelected(string path)
+        {
+            _onDialogConfirm?.Invoke(path);
+
+            UnsubscribeEvents();
         }
     }
 }

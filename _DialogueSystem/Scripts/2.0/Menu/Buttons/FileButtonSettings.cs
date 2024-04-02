@@ -19,7 +19,7 @@ namespace DialogueSystem.Menu
                             MenuButtonItem = new(){ Name = "Save", ID = 0, Shortcut = (Key)KeyModifierMask.MaskCtrl | Key.S },
                         },
                         new() {
-                            MenuButtonItem = new(){ Name = "Load", ID = 1, Shortcut = (Key)KeyModifierMask.MaskCtrl | Key.O },
+                            MenuButtonItem = new(){ Name = "Open", ID = 1, Shortcut = (Key)KeyModifierMask.MaskCtrl | Key.O },
                         },
                         new() {
                             MenuButtonItem = new(){ Name = "Export", ID = 2, Shortcut = (Key)KeyModifierMask.MaskCtrl | Key.E },

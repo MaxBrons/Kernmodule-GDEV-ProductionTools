@@ -1,7 +1,7 @@
 using DialogueSystem;
 using Godot;
 
-public partial class TextNode : GraphNode
+public partial class TextNodeOld : GraphNode
 {
     public string NodeTitle { get => _titleText.Text; set => _titleText.Text = value; }
     public string NodeContent { get => _contentText.Text; set => _contentText.Text = value; }

@@ -109,7 +109,7 @@ public partial class FilePopupMenu : PopupMenuItem
                     continue;
                 }
 
-                TextNode textNode = (node as TextNode);
+                TextNodeOld textNode = (node as TextNodeOld);
                 textNode.Name = item.Name;
                 textNode.PositionOffset = item.Position;
                 textNode.Size = item.Size;

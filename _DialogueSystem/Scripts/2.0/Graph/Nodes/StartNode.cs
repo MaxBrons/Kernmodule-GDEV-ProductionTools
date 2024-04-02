@@ -3,7 +3,7 @@ using Godot;
 
 namespace DialogueSystem.Graph
 {
-    public struct StartNodeData : IGraphNodeData
+    public class StartNodeData : IGraphNodeData
     {
 
         public ulong ID { get; set; } = 0;
@@ -19,22 +19,25 @@ namespace DialogueSystem.Graph
 
     public partial class StartNode : GraphNode, IGraphNode, ISavable<StartNodeData>
     {
-        private LineEdit _titleText;
+        private Label _titleText;
+
+        public override void _Ready()
+        {
+            _titleText = this.GetChild<Label>();
+        }
 
         public void SetupNode(IGraphNodeData nodeData, NodeSlotData slotData)
         {
-            if (nodeData != null && nodeData != default) {
+            if (nodeData != null) {
                 var data = (StartNodeData)nodeData;
 
-                _titleText = this.GetChild<LineEdit>();
-
-                _titleText.Name = data.ID.ToString();
+                Name = data.ID.ToString();
                 _titleText.Text = data.Title;
                 PositionOffset = data.Position;
                 Size = data.Size;
             }
 
-            if (!slotData.Equals(null) && !slotData.Equals(default))
+            if (!slotData.Equals(null))
                 SetSlot((int)slotData.Index, slotData.LSlotEnabled, (int)slotData.LType, slotData.LSlotColor, slotData.RSlotEnabled, (int)slotData.RType, slotData.RSlotColor);
         }
 
@@ -43,6 +46,7 @@ namespace DialogueSystem.Graph
             return new()
             {
                 ID = GetInstanceId(),
+                Title = _titleText.Text,
                 PrefabPath = SceneFilePath,
                 Position = PositionOffset,
                 Size = Size
