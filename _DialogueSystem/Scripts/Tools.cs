@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using DialogueSystem.Serialization;
+using Godot;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -125,6 +126,17 @@ namespace DialogueSystem
             });
 
             await Task.Delay(1000);
+        }
+
+        public static void RefreshGraph(this Graph.Graph graph)
+        {
+            var children = graph.GetTree().Root.GetChildren();
+
+            foreach (var item in children) {
+                if (item is IRefreshable refreshable) {
+                    refreshable.Refresh();
+                }
+            }
         }
     }
 }

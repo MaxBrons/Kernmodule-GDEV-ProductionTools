@@ -13,9 +13,20 @@ namespace DialogueSystem
 
         public static void SaveGraphToJSON(this Graph.Graph graph, string path)
         {
+            File.WriteAllText(path, JsonSerializer.Serialize(s_data, options: new() { WriteIndented = true }));
+
+            GD.Print("Saving file: " + path);
+
+            s_data = new();
+        }
+
+        public static void SaveGraphToFile(this Graph.Graph graph, string path, bool header = true)
+        {
             var writer = File.CreateText(path);
             foreach (var obj in s_data) {
-                writer.WriteLine(obj.GetType().ToString());
+                if (header)
+                    writer.WriteLine(obj.GetType().ToString());
+
                 writer.Write(JsonSerializer.Serialize(obj, obj.GetType()));
                 writer.WriteLine();
             }

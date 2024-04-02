@@ -1,5 +1,7 @@
+using DialogueSystem.Serialization;
 using Godot;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace DialogueSystem.Graph
 {
@@ -14,7 +16,7 @@ namespace DialogueSystem.Graph
         }
     }
 
-    public partial class Graph : GraphEdit, ISavable<GraphConnectionsData>
+    public partial class Graph : GraphEdit, ISavable<GraphConnectionsData>, IRefreshable
     {
         public bool LeftDisconnects {
             get => _leftDisconnects;
@@ -31,60 +33,23 @@ namespace DialogueSystem.Graph
 
         private string _currentSelectedNode;
         private bool _leftDisconnects;
+        private List<Node> _currentSelected = new();
+        private List<Node> _currentCopied = new();
 
         // Connection handling
         public override void _Ready()
         {
             ConnectionRequest += OnConnectionRequest;
-            //CopyNodesRequest += OnCopyNodesRequest;
-            //DeleteNodesRequest += OnDeleteNodesRequest;
+            CopyNodesRequest += OnCopyNodesRequest;
+            DeleteNodesRequest += OnDeleteNodesRequest;
             DisconnectionRequest += OnDisconnectionRequest;
-            //PasteNodesRequest += OnPasteNodesRequest;
+            PasteNodesRequest += OnPasteNodesRequest;
 
             NodeSelected += OnNodeSelected;
             NodeDeselected += OnNodeDeselected;
 
             RightDisconnects = true;
             LeftDisconnects = false;
-        }
-
-        private void OnNodeDeselected(Node node)
-        {
-            // set current selected
-        }
-
-        private void OnNodeSelected(Node node)
-        {
-            // unset current selected;
-        }
-
-        private void OnConnectionRequest(StringName fromNode, long fromPort, StringName toNode, long toPort)
-        {
-            if (fromNode != toNode)
-                ConnectNode(fromNode, (int)fromPort, toNode, (int)toPort);
-        }
-
-
-        /*private void OnCopyNodesRequest()
-        {
-
-        }
-
-        private void OnPasteNodesRequest()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        private void OnDeleteNodesRequest(Godot.Collections.Array nodes)
-        {
-            throw new System.NotImplementedException();
-        }*/
-
-
-        // Deconnection handling
-        private void OnDisconnectionRequest(StringName fromNode, long fromPort, StringName toNode, long toPort)
-        {
-            DisconnectNode(fromNode, (int)fromPort, toNode, (int)toPort);
         }
 
         public T AddNode<T>(string path, Transform transform = default) where T : GraphNode
@@ -104,6 +69,24 @@ namespace DialogueSystem.Graph
                 GD.PrintErr("Could not add node of type " + typeof(T) + " at path: " + path);
 
             return node;
+        }
+
+        public GraphConnectionsData GetConnectionsFromNode(string nodeName)
+        {
+            GraphConnectionsData data = new();
+            var connections = GetConnectionList().Where(x => x["from_node"].AsStringName() == nodeName);
+
+            foreach (var connection in connections) {
+                data.Add(new()
+                {
+                    FromNode = connection["from_node"].ToString(),
+                    FromPort = connection["from_port"].AsInt32(),
+                    ToNode = connection["to_node"].ToString(),
+                    ToPort = connection["to_port"].AsInt32(),
+                });
+            }
+
+            return data;
         }
 
         public GraphConnectionsData GetData()
@@ -126,6 +109,68 @@ namespace DialogueSystem.Graph
             }
 
             return pairs;
+        }
+
+        private void OnNodeDeselected(Node node)
+        {
+            _currentSelected.Remove(node);
+        }
+
+        private void OnNodeSelected(Node node)
+        {
+            _currentSelected.Add(node);
+        }
+
+        private void OnConnectionRequest(StringName fromNode, long fromPort, StringName toNode, long toPort)
+        {
+            if (fromNode != toNode)
+                ConnectNode(fromNode, (int)fromPort, toNode, (int)toPort);
+        }
+
+        private void OnCopyNodesRequest()
+        {
+            _currentCopied = new(_currentSelected);
+        }
+
+        private void OnPasteNodesRequest()
+        {
+            foreach (var node in _currentCopied) {
+                if (node.GetType() != typeof(StartNode)) {
+                    GraphNode child = node.Duplicate() as GraphNode;
+                    child.PositionOffset += new Vector2(10, 10);
+
+                    AddChild(child);
+                }
+            }
+        }
+
+        private void OnDeleteNodesRequest(Godot.Collections.Array nodes)
+        {
+            foreach (var node in _currentSelected) {
+                if (node.GetType() == typeof(StartNode))
+                    continue;
+
+                var connections = GetConnectionList().Where(x => x["from_node"].AsStringName() == node.Name || x["to_node"].AsStringName() == node.Name);
+
+                foreach (var connection in connections) {
+                    DisconnectNode(connection["from_node"].AsStringName(), connection["from_port"].AsInt32(), connection["to_node"].AsStringName(), connection["to_port"].AsInt32());
+                }
+
+                node.QueueFree();
+            }
+
+            Refresh();
+        }
+
+        private void OnDisconnectionRequest(StringName fromNode, long fromPort, StringName toNode, long toPort)
+        {
+            DisconnectNode(fromNode, (int)fromPort, toNode, (int)toPort);
+        }
+
+        public void Refresh()
+        {
+            _currentSelected = new();
+            _currentCopied = new();
         }
     }
 }

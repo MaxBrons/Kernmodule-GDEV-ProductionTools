@@ -74,7 +74,7 @@ namespace DialogueSystem
                 _graph.MarkGraphForSaving<StartNodeData>();
                 _graph.MarkGraphForSaving<TextNodeData>();
                 _graph.MarkGraphConnectionsForSaving<GraphConnectionsData>();
-                _graph.SaveGraphToJSON(path);
+                _graph.SaveGraphToFile(path);
             }, null).OpenDialog;
 
             _menuBar.OnMenuItemPressed += new FileDialogHook("Open", _dialog, _openDialogInfo, (path) => {
@@ -83,6 +83,8 @@ namespace DialogueSystem
                 new StartNodeInitializer().InitializeData(_graph, _graph.LoadGraphFromJSON<StartNodeData>(path));
                 new TextNodeInitializer().InitializeData(_graph, _graph.LoadGraphFromJSON<TextNodeData>(path));
                 new GraphConnectionsInitializer().InitializeData(_graph, _graph.LoadGraphFromJSON<GraphConnectionsData>(path));
+
+                _graph.RefreshGraph();
             }, null).OpenDialog;
 
             _menuBar.OnMenuItemPressed += new FileDialogHook("Export", _dialog, _exportDialogInfo, (path) => {
