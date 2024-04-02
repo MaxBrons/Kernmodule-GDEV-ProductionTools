@@ -27,14 +27,8 @@ namespace DialogueSystem.Menu
     {
         public event Action<MenuButtonInfo.MenuButtonItem> OnMenuItemPressed;
 
-        private List<IMenuListener> _listeners = new();
         private Dictionary<MenuButton, MenuButtonInitInfo> _buttons = new();
         private MenuButton _currentMenu;
-
-        public override void _Ready()
-        {
-
-        }
 
         public void SetButtons(params MenuButtonInitInfo[] buttonInfo)
         {
@@ -52,7 +46,6 @@ namespace DialogueSystem.Menu
             foreach (var item in buttonInfo.MenuButton.MenuButtonItems) {
                 button.AddItem(item.MenuButtonItem.Name, (int)item.MenuButtonItem.ID, item.MenuButtonItem.Shortcut);
                 button += item.MenuButtonItem;
-                // TODO: Implement submenu items
             }
 
             button.OnMenuItemPressed += Button_OnMenuItemPressed;

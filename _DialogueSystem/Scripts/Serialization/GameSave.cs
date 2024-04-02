@@ -7,15 +7,12 @@ using System.Text.Json;
 
 namespace DialogueSystem
 {
-    // TODO: Save graph connections to json and load connections from json.
-
     public static class GameSave
     {
         private static List<object> s_data = new();
 
         public static void SaveGraphToJSON(this Graph.Graph graph, string path)
         {
-            //SaveManager.SaveToJSON(path, s_data);
             var writer = File.CreateText(path);
             foreach (var obj in s_data) {
                 writer.WriteLine(obj.GetType().ToString());

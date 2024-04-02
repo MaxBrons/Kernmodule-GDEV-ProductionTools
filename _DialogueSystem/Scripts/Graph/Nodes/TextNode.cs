@@ -5,16 +5,12 @@ namespace DialogueSystem.Graph
 {
     public class TextNodeData : IGraphNodeData
     {
-        public ulong ID { get; set; } = 0;
-        public string Title { get; set; } = string.Empty;
-        public string PrefabPath { get; set; } = string.Empty;
-        public string Content { get; set; } = string.Empty;
+        public ulong ID { get; set; }
+        public string Title { get; set; }
+        public string PrefabPath { get; set; }
+        public string Content { get; set; }
         public Serializable<Vector2> Position { get; set; } = Vector2.Zero;
         public Serializable<Vector2> Size { get; set; } = Vector2.Zero;
-
-        public TextNodeData()
-        {
-        }
     }
 
     public partial class TextNode : GraphNode, IGraphNode, ISavable<TextNodeData>

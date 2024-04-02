@@ -3,21 +3,17 @@ using System;
 
 namespace DialogueSystem.Menu.Hooks
 {
-    public struct DialogInfo
+    public class DialogInfo
     {
-        public string Title { get; set; } = string.Empty;
-        public FileDialog.FileModeEnum DialogMode { get; set; } = FileDialog.FileModeEnum.SaveFile;
+        public string Title { get; set; }
+        public FileDialog.FileModeEnum DialogMode { get; set; }
         public FileDialog.AccessEnum Access { get; set; } = FileDialog.AccessEnum.Filesystem;
-        public string[] FileFilters { get; set; } = new[] { "*.dsf ; Dialogue System File" };
+        public string[] FileFilters { get; set; }
         public string CancelButtonText { get; set; } = "Cancel";
         public string ComfirmButtonText { get; set; } = "Save";
-        public string RootFolder { get; set; } = string.Empty;
-        public bool ShowHiddenFiles { get; set; } = false;
+        public string RootFolder { get; set; }
+        public bool ShowHiddenFiles { get; set; }
         public bool UseNativeDialog { get; set; } = true;
-
-        public DialogInfo()
-        {
-        }
     }
 
     public delegate void DialogueConfirmedEvent(string path);

@@ -89,7 +89,9 @@ namespace DialogueSystem
                 if (Path.GetExtension(path) != ".json")
                     path += ".json";
 
-                // TODO: implement exporting graph to JSON.
+                _graph.MarkGraphForSaving<StartNodeExportData>();
+                _graph.MarkGraphForSaving<TextNodeExportData>();
+                _graph.SaveGraphToJSON(path);
             }, null).OpenDialog;
         }
     }

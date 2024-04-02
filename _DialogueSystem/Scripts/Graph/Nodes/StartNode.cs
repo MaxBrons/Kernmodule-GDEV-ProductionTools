@@ -6,15 +6,11 @@ namespace DialogueSystem.Graph
     public class StartNodeData : IGraphNodeData
     {
 
-        public ulong ID { get; set; } = 0;
-        public string Title { get; set; } = string.Empty;
-        public string PrefabPath { get; set; } = string.Empty;
+        public ulong ID { get; set; }
+        public string Title { get; set; }
+        public string PrefabPath { get; set; }
         public Serializable<Vector2> Position { get; set; } = new Vector2();
         public Serializable<Vector2> Size { get; set; } = new Vector2();
-
-        public StartNodeData()
-        {
-        }
     }
 
     public partial class StartNode : GraphNode, IGraphNode, ISavable<StartNodeData>
