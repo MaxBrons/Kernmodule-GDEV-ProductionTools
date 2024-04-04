@@ -37,7 +37,7 @@ namespace DialogueSystem.Graph
             if (nodeData != null) {
                 var data = (TextNodeData)nodeData;
 
-                Name = data.ID.ToString();
+                Name = GetInstanceId().ToString();
                 _titleText.Text = data.Title;
                 _contentText.Text = data.Content;
                 PositionOffset = data.Position;
@@ -52,12 +52,12 @@ namespace DialogueSystem.Graph
         {
             return new()
             {
-                ID = this.GetInstanceId(),
+                ID = GetInstanceId(),
                 Title = _titleText?.Text,
-                PrefabPath = SceneFilePath,
                 Content = _contentText?.Text,
                 Position = PositionOffset,
-                Size = Size
+                Size = Size,
+                PrefabPath = SceneFilePath
             };
         }
 
